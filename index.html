@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Détecteur de biais journalistique</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://js.puter.com/v2/"></script>
+</head>
+
+<body>
+    <header>
+        <img src="https://raw.githubusercontent.com/<YOUR_USERNAME>/bias-checker/main/header-image.png" 
+             alt="Illustration biais journalistiques" class="header-img">
+
+        <h1>Détecteur de biais journalistique</h1>
+        <p>Analyse IA des biais, frames, sources et connotations dans vos articles.</p>
+    </header>
+
+    <main>
+        <textarea id="inputText" placeholder="Colle ici ton article journalistique..."></textarea>
+        <button id="analyzeBtn">Analyser l’article</button>
+
+        <section id="results" class="hidden">
+            <h2>Résultats de l’analyse</h2>
+
+            <div class="result-block">
+                <h3>⚖️ Score de neutralité</h3>
+                <p id="neutralityScore"></p>
+            </div>
+
+            <div class="result-block">
+                <h3>📌 Biais repérés</h3>
+                <ul id="biasList"></ul>
+            </div>
+
+            <div class="result-block">
+                <h3>💬 Mots/Tournures connotés</h3>
+                <ul id="connotationList"></ul>
+            </div>
+
+            <div class="result-block">
+                <h3>🗣️ Analyse des citations et des sources</h3>
+                <ul id="sourceList"></ul>
+            </div>
+
+            <div class="result-block">
+                <h3>🧩 Frames identifiées</h3>
+                <ul id="frameList"></ul>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
