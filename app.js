@@ -1,14 +1,12 @@
+<script src="https://js.puter.com/v2/"></script>
+
+<script>
 document.getElementById("analyzeBtn").addEventListener("click", async () => {
     const input = document.getElementById("inputText").value.trim();
     if (!input) return alert("Colle un article avant d’analyser.");
 
     try {
-        const response = await Puter.ai.chat.completions.create({
-            model: "puter-2",
-            messages: [
-                {
-                    role: "system",
-                    content: `
+        const prompt = `
 Tu es un outil d’analyse journalistique.
 
 Analyse l’article selon les étapes suivantes :
@@ -28,35 +26,24 @@ Analyse l’article selon les étapes suivantes :
  "sources": [{ "citation": "...", "analyse": "..." }],
  "frames": ["..."]
 }
-                    `
-                },
-                {
-                    role: "user",
-                    content: input
-                }
-            ]
+`;
+
+        const response = await puter.ai.chat(prompt, {
+            model: "gemini-3-pro-preview" // modèle Puter côté web
         });
 
-        const text = response.choices[0].message.content;
-        const result = JSON.parse(text);
+        // Parse JSON renvoyé par l'IA
+        const result = JSON.parse(response);
 
+        // Affichage
         document.getElementById("results").classList.remove("hidden");
-
         document.getElementById("neutralityScore").textContent = result.neutrality + "%";
-
         document.getElementById("biasList").innerHTML =
             result.biases.map(b => `<li>${b}</li>`).join("");
-
         document.getElementById("connotationList").innerHTML =
-            result.connotations
-            .map(c => `<li><strong>${c.mot}</strong> : ${c.explication}</li>`)
-            .join("");
-
+            result.connotations.map(c => `<li><strong>${c.mot}</strong> : ${c.explication}</li>`).join("");
         document.getElementById("sourceList").innerHTML =
-            result.sources
-            .map(s => `<li><strong>${s.citation}</strong> : ${s.analyse}</li>`)
-            .join("");
-
+            result.sources.map(s => `<li><strong>${s.citation}</strong> : ${s.analyse}</li>`).join("");
         document.getElementById("frameList").innerHTML =
             result.frames.map(f => `<li>${f}</li>`).join("");
 
@@ -65,3 +52,5 @@ Analyse l’article selon les étapes suivantes :
         alert("Erreur : l’IA n’a pas répondu. Vérifie la console.");
     }
 });
+</script>
+
